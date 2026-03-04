@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip</title>
+    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Met kovanca</h1>
+    <div id="coin">Klikni gumb za met</div>
+    <img id="coinImage" src="" alt="Coin Image" style="display: none; width: 100px; height: 100px;" />
+    <button onClick="btnClick()" type="button">FLIP</button>
+</body>
+
+</html>
+
+<script>
+    function btnClick() {
+        var divCoin = document.getElementById("coin");
+        var coinImage = document.getElementById("coinImage");
+
+        $.ajax({
+            url: "/coinData", 
+            success: function (result) {
+                console.log(result);  
+                divCoin.innerHTML = result;  
+
+               
+                if (result === "HEADS") {
+                    coinImage.src = "/static/head.png";  
+                } else {
+                    coinImage.src = "/static/tail.png";  
+                }
+
+                
+                coinImage.style.display = "block";
+            },
+            error: function (error) {
+                console.error("Error", error);
+                divCoin.innerHTML = "Error ";
+                coinImage.style.display = "none"; 
+            }
+        });
+    }
+</script>
